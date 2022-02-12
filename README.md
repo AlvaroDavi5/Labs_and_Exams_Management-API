@@ -48,21 +48,21 @@ ___
 
 #### TODO
 
-- [ ] Database
-  - [ ] Models
-  - [ ] Migrations
-  - [ ] Seeders
+- [x] Database
+  - [x] Models
+  - [x] Migrations
+  - [x] Seeders
   - [x] Documentation
-  - [ ] Containerization
-- [ ] Labs Controllers (CRUD)
-- [ ] Exams Controllers (CRUD)
+  - [x] Containerization
+- [ ] Exams Controllers
+- [ ] Labs Controllers
+- [ ] ExamLab Controllers
 - [ ] API
   - [ ] Routes
   - [ ] REST Architecture
   - [ ] HTTP Status Codes
   - [ ] Documentation
-  - [ ] Containerization
-- [ ] JWT/OAuth Authentication
+  - [x] Containerization
 - [ ] Aplication Deployment
 
 ___
