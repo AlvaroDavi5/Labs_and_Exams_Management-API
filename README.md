@@ -54,9 +54,9 @@ ___
   - [x] Seeders
   - [x] Documentation
   - [x] Containerization
-- [ ] Exams Controllers
-- [ ] Labs Controllers
-- [ ] ExamLab Controllers
+- [x] Exams Controllers
+- [x] Labs Controllers
+- [x] ExamLab Controllers
 - [ ] API
   - [ ] Routes
   - [ ] REST Architecture
