@@ -28,6 +28,7 @@ yarn run db_config
 # after install Node.js
 node src/app.js
 ```
+After this, access the [localhost](http://localhost:3000/) link.
 ___
 <br>
 
