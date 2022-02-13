@@ -2,6 +2,7 @@
 version: "3.7"
 
 services:
+
   app:
     build: ./
     container_name: WaProj_API
@@ -11,6 +12,8 @@ services:
       - default
     ports:
       - 3000:3000
+    #volumes:
+    #  - ./:/home/node/WaProj_API/
     depends_on:
      - db
     links:
@@ -19,13 +22,15 @@ services:
   db:
     image: postgres:latest
     container_name: WaProj_DB
-    user: root
     environment:
       POSTGRES_USER: postgres # default
       POSTGRES_PASSWORD: password # password sample
       POSTGRES_DB: WaProject_DB # database name sample
+    user: root
     networks:
       - default
+    #volumes:
+    #  - ./.docker/docker_containers/postgresql/:/var/lib/postgresql/
     ports:
       - 5432:5432
 
