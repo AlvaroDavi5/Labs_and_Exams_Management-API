@@ -7,7 +7,7 @@ module.exports = {
 				id: 1,
 				name: "S.T.A.R. Labs",
 				address: "Centrtal City",
-				status: 1
+				status: true
 			},
 		], {})
 	},

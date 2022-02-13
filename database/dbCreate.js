@@ -20,4 +20,4 @@ ExamLab.init(connection)
 ExamLab.associate(connection.models) // relations in each model
 
 
-module.exports = connection;
+module.exports = connection

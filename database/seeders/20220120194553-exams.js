@@ -7,7 +7,7 @@ module.exports = {
 				id: 1,
 				name: "Accelerated Metabolism",
 				type: "clinical analysis",
-				status: 1
+				status: true
 			}
 		], {})
 	},

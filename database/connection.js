@@ -15,4 +15,4 @@ catch (error) {
 }
 
 
-module.exports = connection;
+module.exports = connection
