@@ -32,6 +32,7 @@ ___
 <br>
 
 ### Technologies
+ - [TypeScript](https://www.typescriptlang.org/)
  - [Node.js](https://nodejs.org/)
  - [Express.js](https://expressjs.com/)
  - [PostgreSQL](https://www.postgresql.org/)
@@ -58,61 +59,19 @@ ___
 - [x] Labs Controllers
 - [x] ExamLab Controllers
 - [ ] API
-  - [ ] Routes
-  - [ ] REST Architecture
-  - [ ] HTTP Status Codes
+  - [x] Routes
+    - [x] Get active entities
+    - [x] Find by term in name
+    - [x] Create/Delete on all associated registers by lab_id/exam_id
+    - [x] Find all labs associated with an exam
+  - [x] REST Architecture
+  - [x] HTTP Status Codes
   - [ ] Documentation
   - [x] Containerization
+- [ ] Migrate Code to TypeScript
 - [ ] Aplication Deployment
 
 ___
 </br>
 
 For more information, visit the `docs` folder.
-
-___
-</br>
-
-```
-	Contexto
-
-Estamos desenvolvendo uma API para as seguintes situações:
-
-- Laboratório:
-	- cadastrar um novo laboratório;
-	- obter uma lista de laboratórios ativos;
-	- atualizar um laboratório existente;
-	- remover logicamente um laboratório ativo.
-
-- Exames:
-	- cadastrar um novo exame;
-	- obter uma lista de exames ativos;
-	- atualizar um exame existente;
-	- remover logicamente um exame ativo.
-
-
-	Informações
-
-- Laboratório
-	- nome
-	- endereço
-	- status [ativo, inativo]
-
-- Exame
-	- nome
-	- tipo [analise clinica, imagem]
-	- status [ativo, inativo]
-
-
-	Associação:
-
-	- Importante: O cadastro de um laboratório/exame é considerado ativo e recebe um `id` gerado automaticamente.
-	- Importante: Um exame pode estar associado a mais de um laboratório;
-	- associar/desassociar um exame ativo à/de um laboratório ativo;
-
-
-	Funcionalidades extras
-
-- Possibilidade de executar cadastro, atualização e remoção em lote;
-- Endpoint que faz a busca por nome do exame e retorna todos os laboratórios associados a esse exame.
-```
