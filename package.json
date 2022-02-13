@@ -5,6 +5,7 @@
 	"author": "Alvaro Davi",
 	"license": "MIT",
 	"scripts": {
+		"start": "node src/app.js",
 		"db:setup": "yarn sequelize-cli db:drop && yarn sequelize-cli db:create && yarn sequelize-cli db:migrate && yarn sequelize-cli db:seed:all"
 	},
 	"dependencies": {
