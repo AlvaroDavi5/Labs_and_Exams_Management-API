@@ -4,8 +4,6 @@ const path = require('path')
 const dotenv = require('dotenv')
 const routes = require("./routes.js")
 
-dotenv.config({path:__dirname+"/../.env.development.local"})
-
 
 const app = express()
 app.use(bodyParser.json())
