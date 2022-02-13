@@ -32,16 +32,17 @@ ___
 <br>
 
 ### Technologies
+ - [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
  - [TypeScript](https://www.typescriptlang.org/)
  - [Node.js](https://nodejs.org/)
  - [Express.js](https://expressjs.com/)
  - [PostgreSQL](https://www.postgresql.org/)
  - [Sequelize ORM](https://sequelize.org/)
- - [JWT](https://jwt.io/)
  - [Docker](https://www.docker.com/)
  - [Docker Compose](https://docs.docker.com/compose/)
- - [API Blueprint](https://apiblueprint.org/)
  - [Heroku](https://www.heroku.com/)
+ - [DBDiagram](https://dbdiagram.io/)
+ - [API Blueprint](https://apiblueprint.org/)
 
 
 ---
@@ -68,8 +69,8 @@ ___
   - [x] HTTP Status Codes
   - [ ] Documentation
   - [x] Containerization
-- [ ] Migrate Code to TypeScript
-- [ ] Aplication Deployment
+- [x] Aplication Deployment
+- [ ] Migrate Code to TypeScript in different releases
 
 ___
 </br>
