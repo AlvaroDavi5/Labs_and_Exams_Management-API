@@ -15,5 +15,10 @@ module.exports = {
 		underscored: true, // underscored name of fields
 		timestamps: true, // to created_at and updated_at
 		freezeTableName: false // not set table names on plural
+	},
+	dialectOptions: {
+		ssl: {
+			rejectUnauthorized: false // to use SSL protocol
+		}
 	}
 }
