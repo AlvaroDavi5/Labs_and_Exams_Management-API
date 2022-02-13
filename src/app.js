@@ -1,8 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const routes = require("./routes.js")
 const path = require('path')
 const dotenv = require('dotenv')
+const routes = require("./routes.js")
+
 dotenv.config({path:__dirname+"/../.env.development.local"})
 
 
