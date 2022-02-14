@@ -34,15 +34,15 @@ exports.examRead = async function(request, response) {
 	const { method, params } = request
 
 	try {
-		const exam = await examController.getExamById(params.id)
+		const exam = await examController.getExamById(parseInt(params.id))
 		const labs = await labController.getAllLabs()
 		const examLabs = await examLabController.getAllExamLabs()
 		let labList = []
 
 		examLabs.forEach(examLab => {
-			if (examLab.exam_id == exam.id) {
+			if (parseInt(examLab.exam_id) == parseInt(exam.id)) {
 				labs.forEach(lab => {
-					if (lab.id == examLab.lab_id) {
+					if (parseInt(lab.id) == parseInt(examLab.lab_id)) {
 						labList.push(lab)
 					}
 				})
@@ -116,7 +116,7 @@ exports.examUpdate = async function(request, response) {
 	const { method, params, body } = request
 
 	try {
-		const exam = await examController.getExamById(params.id)
+		const exam = await examController.getExamById(parseInt(params.id))
 		let wasUpdated = false
 		if (!!exam) {
 			wasUpdated = await examController.updateExam(exam, body.name, body.type, body.status)
@@ -145,7 +145,7 @@ exports.examDelete = async function(request, response) {
 	const { method, params } = request
 
 	try {
-		const exam = await examController.getExamById(params.id)
+		const exam = await examController.getExamById(parseInt(params.id))
 		let wasDeleted = false
 		if (!!user) {
 			wasDeleted = await examController.deleteExam(exam)

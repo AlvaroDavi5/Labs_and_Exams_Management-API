@@ -1,5 +1,6 @@
 const path = require('path')
 const dotenv = require('dotenv') // use environment variables to save sesitive data like database password
+dotenv.config({path:__dirname+"/../.env.development.local"})
 
 
 module.exports = {
@@ -15,9 +16,11 @@ module.exports = {
 		timestamps: true, // to created_at and updated_at
 		freezeTableName: false // not set table names on plural
 	},
+	/*
 	dialectOptions: {
 		ssl: {
 			rejectUnauthorized: false // to use SSL protocol
 		}
 	}
+	*/
 }

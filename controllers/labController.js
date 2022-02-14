@@ -29,6 +29,7 @@ async function createLab(name, address, status, return_id) {
 		}
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -42,6 +43,7 @@ async function getLabById(id) {
 		return lab
 	}
 	catch ({ message }) {
+		console.log(message)
 		return null
 	}
 }
@@ -51,10 +53,18 @@ async function getAllLabs() {
 
 	try {
 		const labs = await Labs.findAll()
+		labList = []
 
-		return labs
+		if (Object.prototype.toString.call(labs) === '[object Array]') {
+			return labs
+		}
+		else {
+			labList.push(labs)
+			return labList
+		}
 	}
 	catch ({ message }) {
+		console.log(message)
 		return null
 	}
 }
@@ -72,6 +82,7 @@ async function searchLab(name) {
 		return !!lab
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -89,6 +100,7 @@ async function updateLab(lab, name, address, status) {
 		return true
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -102,6 +114,7 @@ async function deleteLab(lab) {
 		return true
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }

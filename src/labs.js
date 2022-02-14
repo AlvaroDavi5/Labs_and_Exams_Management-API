@@ -34,15 +34,15 @@ exports.labRead = async function(request, response) {
 	const { method, params } = request
 
 	try {
-		const lab = await labController.getLabById(params.id)
+		const lab = await labController.getLabById(parseInt(params.id))
 		const exams = await examController.getAllExams()
 		const examLabs = await examLabController.getAllExamLabs()
 		let examList = []
 
 		examLabs.forEach(examLab => {
-			if (examLab.lab_id == lab.id) {
+			if (parseInt(examLab.lab_id) == parseInt(lab.id)) {
 				exams.forEach(exam => {
-					if (exam.id == examLab.exam_id) {
+					if (parseInt(exam.id) == parseInt(examLab.exam_id)) {
 						examList.push(exam)
 					}
 				})
@@ -116,7 +116,7 @@ exports.labUpdate = async function(request, response) {
 	const { method, params, body } = request
 
 	try {
-		const lab = await labController.getLabById(params.id)
+		const lab = await labController.getLabById(parseInt(params.id))
 		let wasUpdated = false
 		if (!!lab) {
 			wasUpdated = await labController.updateLab(lab, body.name, body.address, body.status)
@@ -145,7 +145,7 @@ exports.labDelete = async function(request, response) {
 	const { method, params } = request
 
 	try {
-		const lab = await labController.getLabById(params.id)
+		const lab = await labController.getLabById(parseInt(params.id))
 		let wasDeleted = false
 		if (!!user) {
 			wasDeleted = await labController.deleteLab(lab)

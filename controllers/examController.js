@@ -22,6 +22,7 @@ async function createExam(name, type, status, return_id) {
 		}
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -35,6 +36,7 @@ async function getExamById(id) {
 		return exam
 	}
 	catch ({ message }) {
+		console.log(message)
 		return null
 	}
 }
@@ -44,10 +46,18 @@ async function getAllExams() {
 
 	try {
 		const exams = await Exams.findAll()
+		let examList = []
 
-		return exams
+		if (Object.prototype.toString.call(exams) === '[object Array]') {
+			return exams
+		}
+		else {
+			examList.push(exams)
+			return examList
+		}
 	}
 	catch ({ message }) {
+		console.log(message)
 		return null
 	}
 }
@@ -65,6 +75,7 @@ async function searchExam(name) {
 		return !!exam
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -82,6 +93,7 @@ async function updateExam(exam, name, type, status) {
 		return true
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -95,6 +107,7 @@ async function deleteExam(exam) {
 		return true
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }

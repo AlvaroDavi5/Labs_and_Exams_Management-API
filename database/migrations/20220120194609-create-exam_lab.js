@@ -11,11 +11,33 @@ module.exports = {
 			},
 			exam_id: {
 				type: Sequelize.INTEGER,
-				allowNull: false
+				allowNull: false,
+				references: {
+					model: 'exams',
+					key: 'id'
+				},
+				onUpdate: 'NO ACTION',
+				onDelete: 'NO ACTION'
 			},
 			lab_id: {
 				type: Sequelize.INTEGER,
-				allowNull: false
+				allowNull: false,
+				references: {
+					model: 'labs',
+					key: 'id'
+				},
+				onUpdate: 'NO ACTION',
+				onDelete: 'NO ACTION'
+			},
+			created_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
+				defaultValue: new Date()
+			},
+			updated_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
+				defaultValue: new Date()
 			}
 		})
 	},

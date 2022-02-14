@@ -17,7 +17,10 @@ ExamLab.init(connection)
   * @hasMany - One-to-Many, target -> source
   * @belongsToMany - Many-to-Many, source -> target
 **/
+Labs.associate(connection.models)
+Exams.associate(connection.models)
 ExamLab.associate(connection.models) // relations in each model
+connection.sync({ force: true }) // drop all tables and recreate them
 
 
 module.exports = connection

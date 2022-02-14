@@ -21,6 +21,7 @@ async function createExamLab(exam_id, lab_id, return_id) {
 		}
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -34,6 +35,7 @@ async function getExamLabById(id) {
 		return examLab
 	}
 	catch ({ message }) {
+		console.log(message)
 		return null
 	}
 }
@@ -43,10 +45,18 @@ async function getAllExamLabs() {
 
 	try {
 		const examLabs = await ExamLab.findAll()
+		let examLabList = []
 
-		return examLabs
+		if (Object.prototype.toString.call(examLabs) === '[object Array]') {
+			return examLabs
+		}
+		else {
+			examLabList.push(examLabs)
+			return examLabList
+		}
 	}
 	catch ({ message }) {
+		console.log(message)
 		return null
 	}
 }
@@ -63,6 +73,7 @@ async function updateExamLab(exam_lab, exam_id, lab_id) {
 		return true
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }
@@ -76,6 +87,7 @@ async function deleteExamLab(exam_lab) {
 		return true
 	}
 	catch ({ message }) {
+		console.log(message)
 		return false
 	}
 }

@@ -11,17 +11,17 @@ exports.associate = async function(request, response) {
 		let associationAlreadyExists = false
 
 		allExamLabs.forEach(examLab => {
-			if (examLab.exam_id == params.exam_id && examLab.lab_id == params.lab_id) {
+			if (parseInt(examLab.exam_id) == parseInt(params.exam_id) && parseInt(examLab.lab_id) == parseInt(params.lab_id)) {
 				associationAlreadyExists = true
 			}
 		})
 		if (!associationAlreadyExists) {
-			const exam = await examController.getExamById(params.exam_id)
-			const lab = await labController.getLabById(params.lab_id)
+			const exam = await examController.getExamById(parseInt(params.exam_id))
+			const lab = await labController.getLabById(parseInt(params.lab_id))
 			let newExamLab = null
 
 			if (!!exam && !!lab) {
-				newExamLab = await examLabController.createExamLab(params.exam_id, params.lab_id, false)
+				newExamLab = await examLabController.createExamLab(parseInt(params.exam_id), parseInt(params.lab_id), false)
 			}
 		}
 
@@ -55,7 +55,7 @@ exports.dissociate = async function(request, response) {
 		let deletedAssociation = false
 
 		allExamLabs.forEach(examLab => {
-			if (examLab.exam_id == params.exam_id && examLab.lab_id == params.lab_id) {
+			if (parseInt(examLab.exam_id) == parseInt(params.exam_id) && parseInt(examLab.lab_id) == parseInt(params.lab_id)) {
 				deletedAssociation = examLabController.deleteExamLab(examLab)
 			}
 		})

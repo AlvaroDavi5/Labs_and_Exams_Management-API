@@ -10,7 +10,21 @@ class Labs extends Model {
 				status: DataTypes.BOOLEAN
 			},
 			{
-				sequelize: connection
+				sequelize: connection,
+				tableName: 'labs',
+				modelName: 'Labs'
+			}
+		)
+	}
+
+	static associate(models) {
+
+		this.belongsTo(models.ExamLab,
+			{
+				constraint: true,
+				foreignKey: 'lab_id',
+				targetKey: 'id',
+				as: 'lab'
 			}
 		)
 	}
