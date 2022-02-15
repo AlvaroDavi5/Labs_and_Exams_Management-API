@@ -68,7 +68,7 @@ ___
     - [x] Find all labs associated with an exam
   - [x] REST Architecture
   - [x] HTTP Status Codes
-  - [ ] Documentation
+  - [x] Documentation
   - [x] Containerization
 - [x] Aplication Deployment
 - [ ] Migrate Code to TypeScript in different releases
