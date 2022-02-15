@@ -7,7 +7,17 @@ exports.labCreate = async function(request, response) {
 	const { method, body } = request
 
 	try {
-		const lab_id = await labController.createLab(body.name, body.address, body.status, true)
+		const labs = await labController.getAllLabs()
+		let labAlreadyExists = false
+		labs.forEach(lab => {
+			if (lab.name === body.name) {
+				labAlreadyExists = true
+			}
+		})
+		let lab_id = null
+		if (!labAlreadyExists) {
+			lab_id = await labController.createLab(body.name, body.address, true, true)
+		}
 
 		response.status(201) // Created
 		response.send({
@@ -76,7 +86,9 @@ exports.labReadAll = async function(request, response) {
 
 	try {
 		const allLabs = await labController.getAllLabs()
-		let labs = allLabs
+		let labs = allLabs.filter(lab => {
+			return lab.status == true
+		})
 		if (!!query.search_term) {
 			labs = labs.filter(lab => {
 				return lab.name.toLowerCase().includes(query.search_term.toLowerCase())
@@ -126,7 +138,9 @@ exports.labUpdate = async function(request, response) {
 		response.send({
 			success: !!wasUpdated,
 			method: method,
-			data: wasUpdated,
+			data: {
+				deleted_lab: lab
+			},
 			message: !!wasUpdated ? "Lab updated successfully" : "Error to update lab"
 		})
 	}
@@ -147,7 +161,7 @@ exports.labDelete = async function(request, response) {
 	try {
 		const lab = await labController.getLabById(parseInt(params.id))
 		let wasDeleted = false
-		if (!!user) {
+		if (!!lab) {
 			wasDeleted = await labController.deleteLab(lab)
 		}
 
@@ -155,7 +169,9 @@ exports.labDelete = async function(request, response) {
 		response.send({
 			success: !!wasDeleted,
 			method: method,
-			data: wasDeleted,
+			data: {
+				updated_lab: lab
+			},
 			message: !!wasDeleted ? "Lab deleted successfully" : "Error to delete lab"
 		})
 	}

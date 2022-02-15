@@ -86,7 +86,7 @@ async function updateExam(exam, name, type, status) {
 	try {
 		if (name) { exam.name = name }
 		if (type) { exam.type = type }
-		if (status) { exam.status = status }
+		if (status === false || status === true) { exam.status = status }
 
 		await exam.save()
 

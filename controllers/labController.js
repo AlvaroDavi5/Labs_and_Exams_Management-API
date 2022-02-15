@@ -93,7 +93,7 @@ async function updateLab(lab, name, address, status) {
 	try {
 		if (name) { lab.name = name }
 		if (address) { lab.address = address }
-		if (status) { lab.status = status }
+		if (status === false || status === true) { lab.status = status }
 
 		await lab.save()
 

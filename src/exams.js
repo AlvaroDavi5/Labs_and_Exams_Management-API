@@ -7,7 +7,17 @@ exports.examCreate = async function(request, response) {
 	const { method, body } = request
 
 	try {
-		const exam_id = await examController.createExam(body.name, body.type, body.status, true)
+		const exams = await examController.getAllExams()
+		let examAlreadyExists = false
+		exams.forEach(exam => {
+			if (exam.name === body.name) {
+				examAlreadyExists = true
+			}
+		})
+		let exam_id = null
+		if (!examAlreadyExists) {
+			exam_id = await examController.createExam(body.name, body.type, true, true)
+		}
 
 		response.status(201) // Created
 		response.send({
@@ -76,7 +86,9 @@ exports.examReadAll = async function(request, response) {
 
 	try {
 		const allExams = await examController.getAllExams()
-		let exams = allExams
+		let exams = allExams.filter(exam => {
+			return exam.status == true
+		})
 		if (!!query.search_term) {
 			exams = exams.filter(exam => {
 				return exam.name.toLowerCase().includes(query.search_term.toLowerCase())
@@ -126,7 +138,9 @@ exports.examUpdate = async function(request, response) {
 		response.send({
 			success: !!wasUpdated,
 			method: method,
-			data: wasUpdated,
+			data: {
+				updated_exam: exam
+			},
 			message: !!wasUpdated ? "Exam updated successfully" : "Error to update exam"
 		})
 	}
@@ -147,7 +161,7 @@ exports.examDelete = async function(request, response) {
 	try {
 		const exam = await examController.getExamById(parseInt(params.id))
 		let wasDeleted = false
-		if (!!user) {
+		if (!!exam) {
 			wasDeleted = await examController.deleteExam(exam)
 		}
 
@@ -155,7 +169,9 @@ exports.examDelete = async function(request, response) {
 		response.send({
 			success: !!wasDeleted,
 			method: method,
-			data: wasDeleted,
+			data: {
+				deleted_exam: exam
+			},
 			message: !!wasDeleted ? "Exam deleted successfully" : "Error to delete exam"
 		})
 	}

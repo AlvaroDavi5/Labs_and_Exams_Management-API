@@ -15,10 +15,12 @@ exports.associate = async function(request, response) {
 				associationAlreadyExists = true
 			}
 		})
+		let newExamLab = null
+		let exam = null
+		let lab = null
 		if (!associationAlreadyExists) {
-			const exam = await examController.getExamById(parseInt(params.exam_id))
-			const lab = await labController.getLabById(parseInt(params.lab_id))
-			let newExamLab = null
+			exam = await examController.getExamById(parseInt(params.exam_id))
+			lab = await labController.getLabById(parseInt(params.lab_id))
 
 			if (!!exam && !!lab) {
 				newExamLab = await examLabController.createExamLab(parseInt(params.exam_id), parseInt(params.lab_id), false)
