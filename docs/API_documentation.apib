@@ -1,0 +1,571 @@
+FORMAT: 1A
+
+HOST: https://wa-project-backend.herokuapp.com
+
+
+# Wa Project Challenge API
+
+Sample API created for Wa Project Backend Challenge.  
+
+by _Alvaro Davi_
+___
+
+
+
+# Group API
+
+## Index [/]
+
+### Show API Informations [GET]
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 271
+		ETag: W/"10f-qzRB3lGuJkGQ2iOh6gt8h5grdOA"
+		Date: Tue, 15 Feb 2022 04:59:17 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"message": "Connected to API successfully",
+			"request_data": {
+				"url": "/",
+				"path": "/",
+				"protocol": "http",
+				"method": "GET",
+				"status_code": 200,
+				"query": {},
+				"params": {},
+				"body": {}
+			}
+		}
+		```
++ Response 500 (application/json)
+
+
+
+# Group Exams
+
+## Exams Create/Read [/exams?search_term=sangue]
+
+### Read Exams [GET]
++ Request (application/json)
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 1509
+		ETag: W/"5e5-BDaxiHgXNNdkTrGcxCEP2A7XhJU"
+		Date: Tue, 15 Feb 2022 04:51:41 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "GET",
+			"data": {
+				"exams": [
+					{
+						"id": 3,
+						"name": "exame de sangue",
+						"type": "HEM",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.176Z",
+						"updatedAt": "2022-02-15T04:46:31.176Z"
+					}
+				]
+			},
+			"message": "Exams finded successfully"
+		}
+		```
++ Response 404 (application/json)
+
+### Create Exam [POST]
++ Request (application/json)
+	+ Body
+		```json
+		{
+			"name": "CDAP: Exame Patológico",
+			"type": "PAT/exame patologico"
+		}
+		```
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 92
+		ETag: W/"5c-cQrB8e67eeRSFJHQw0U4CXmPDUQ"
+		Date: Tue, 15 Feb 2022 04:47:06 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "POST",
+			"data": {
+				"exam_id": 12
+			},
+			"message": "Exam created successfully"
+		}
+		```
++ Response 404 (application/json)
+
+
+## Exam Read/Update/Delete [/exam/{id}]
+
+### Read Exam [GET]
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 423
+		ETag: W/"1a7-AlROddpjiRiyu0UXNl2p9qzcw58"
+		Date: Tue, 15 Feb 2022 04:47:33 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "GET",
+			"data": {
+				"exam": {
+					"id": 3,
+					"name": "exame de sangue",
+					"type": "HEM",
+					"status": true,
+					"createdAt": "2022-02-15T04:46:31.176Z",
+					"updatedAt": "2022-02-15T04:46:31.176Z"
+				},
+				"associated_labs": [
+					{
+						"id": 4,
+						"name": "Centro de Diagnóstico Anomato-Patológico",
+						"address": "Joinville - SC",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					}
+				]
+			},
+			"message": "Exam finded successfully"
+		}
+		```
++ Response 404 (application/json)
+
+### Update Exam [PUT]
++ Request (application/json)
+	+ Body
+		```json
+		{
+			"status": false
+		}
+		```
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 237
+		ETag: W/"ed-3iLv58yOSdrs0awm6BFsev5W1aY"
+		Date: Tue, 15 Feb 2022 04:51:29 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "PUT",
+			"data": {
+				"updated_exam": {
+					"id": 7,
+					"name": "exame de tireóide",
+					"type": "TIRE",
+					"status": false,
+					"createdAt": "2022-02-15T04:46:31.176Z",
+					"updatedAt": "2022-02-15T04:51:28.675Z"
+				}
+			},
+			"message": "Exam updated successfully"
+		}
+		```
++ Response 404 (application/json)
+
+### Delete Exam [DELETE]
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 261
+		ETag: W/"105-KWYDySRiTsFv2pJ8AiIUmYfY5PM"
+		Date: Tue, 15 Feb 2022 04:50:23 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "DELETE",
+			"data": {
+				"deleted_exam": {
+					"id": 12,
+					"name": "CDAP: Exame Patológico",
+					"type": "PAT/exame patologico",
+					"status": true,
+					"createdAt": "2022-02-15T04:47:06.629Z",
+					"updatedAt": "2022-02-15T04:47:06.629Z"
+				}
+			},
+			"message": "Exam deleted successfully"
+		}
+		```
++ Response 404 (application/json)
+
+
+
+# Group Labs
+
+## Labs Create/Read [/labs]
+
+### Read Labs [GET]
++ Request (application/json)
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 1115
+		ETag: W/"45b-hK/c4edTzD6kzNUAhBNl0W8xfL4"
+		Date: Tue, 15 Feb 2022 04:52:52 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "GET",
+			"data": {
+				"labs": [
+					{
+						"id": 1,
+						"name": "Colégio Americano de Patologistas (CAP)",
+						"address": "São Paulo - SP",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					},
+					{
+						"id": 3,
+						"name": "Laboratório Santa Luzia",
+						"address": "Florianópolis - SC",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					},
+					{
+						"id": 4,
+						"name": "Centro de Diagnóstico Anomato-Patológico",
+						"address": "Joinville - SC",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					},
+					{
+						"id": 5,
+						"name": "Laboratórios Clínicos Associados",
+						"address": "SP, MT, MS, BA",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					},
+					{
+						"id": 6,
+						"name": "Laboratório Fleury",
+						"address": "São Paulo - SP",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					},
+					{
+						"id": 7,
+						"name": "Hospital Israelita Albert Einstein",
+						"address": "Ibirapuera - SP",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.349Z",
+						"updatedAt": "2022-02-15T04:46:31.349Z"
+					}
+				]
+			},
+			"message": "Labs finded successfully"
+		}
+		```
++ Response 404 (application/json)
+
+### Create Lab [POST]
++ Request (application/json)
+	+ Body
+		```json
+		{
+			"name": "CDAP: Centro de Diagnóstico Anomato-Patológico",
+			"address": "Joinville - SP"
+		}
+		```
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 89
+		ETag: W/"59-uOH5uvsvHq1nYi5SSZMzR8pdR+g"
+		Date: Tue, 15 Feb 2022 04:46:47 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "POST",
+			"data": {
+				"lab_id": 8
+			},
+			"message": "Lab created successfully"
+		}
+		```
++ Response 404 (application/json)
+
+
+## Lab Read/Update/Delete [/lab/{id}]
+
+### Read Lab [GET]
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 986
+		ETag: W/"3da-2Ig3t9KW08/md56SPlB735vaUHc"
+		Date: Tue, 15 Feb 2022 04:47:22 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "GET",
+			"data": {
+				"lab": {
+					"id": 4,
+					"name": "Centro de Diagnóstico Anomato-Patológico",
+					"address": "Joinville - SC",
+					"status": true,
+					"createdAt": "2022-02-15T04:46:31.349Z",
+					"updatedAt": "2022-02-15T04:46:31.349Z"
+				},
+				"associated_exams": [
+					{
+						"id": 2,
+						"name": "exame de fezes",
+						"type": "PARA",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.176Z",
+						"updatedAt": "2022-02-15T04:46:31.176Z"
+					},
+					{
+						"id": 3,
+						"name": "exame de sangue",
+						"type": "HEM",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.176Z",
+						"updatedAt": "2022-02-15T04:46:31.176Z"
+					},
+					{
+						"id": 4,
+						"name": "exame patológico",
+						"type": "PAT",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.176Z",
+						"updatedAt": "2022-02-15T04:46:31.176Z"
+					},
+					{
+						"id": 5,
+						"name": "exame citopatológico",
+						"type": "CITO_PAT",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.176Z",
+						"updatedAt": "2022-02-15T04:46:31.176Z"
+					},
+					{
+						"id": 11,
+						"name": "biópsia",
+						"type": "BIOP",
+						"status": true,
+						"createdAt": "2022-02-15T04:46:31.176Z",
+						"updatedAt": "2022-02-15T04:46:31.176Z"
+					}
+				]
+			},
+			"message": "Lab finded successfully"
+		}
+		```
++ Response 404 (application/json)
+
+### Update Lab [PUT]
++ Request (application/json)
+	+ Body
+		```json
+		{
+			"status": false
+		}
+		```
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 222
+		ETag: W/"de-LwCj0Zo2UaUvo80eSseBb3+0aTg"
+		Date: Tue, 15 Feb 2022 04:52:46 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "PUT",
+			"data": {
+				"updated_lab": {
+					"id": 2,
+					"name": "Dasa",
+					"address": "SP",
+					"status": false,
+					"createdAt": "2022-02-15T04:46:31.349Z",
+					"updatedAt": "2022-02-15T04:52:46.615Z"
+				}
+			},
+			"message": "Lab updated successfully"
+		}
+		```
++ Response 404 (application/json)
+
+### Delete Lab [DELETE]
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 280
+		ETag: W/"118-aE/cdY8Em4MDle6vY0eiwlnWb44"
+		Date: Tue, 15 Feb 2022 04:50:12 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "DELETE",
+			"data": {
+				"deleted_lab": {
+					"id": 8,
+					"name": "CDAP: Centro de Diagnóstico Anomato-Patológico",
+					"address": "Joinville - SP",
+					"status": true,
+					"createdAt": "2022-02-15T04:46:47.869Z",
+					"updatedAt": "2022-02-15T04:46:47.869Z"
+				}
+			},
+			"message": "Lab deleted successfully"
+		}
+		```
++ Response 404 (application/json)
+
+
+
+# Group Associations
+
+## Lab Read/Update/Delete [/association/exam/{exam_id}/lab/{lab_id}]
+
+### Associate [PUT]
++ Request (application/json)
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 364
+		ETag: W/"16c-agokHOYsL9VIHez9NQRkvb8hlKQ"
+		Date: Tue, 15 Feb 2022 04:59:00 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": true,
+			"method": "PUT",
+			"data": {
+				"exam": {
+					"id": 2,
+					"name": "exame de fezes",
+					"type": "PARA",
+					"status": true,
+					"createdAt": "2022-02-15T04:46:31.176Z",
+					"updatedAt": "2022-02-15T04:46:31.176Z"
+				},
+				"lab": {
+					"id": 2,
+					"name": "Dasa",
+					"address": "SP",
+					"status": false,
+					"createdAt": "2022-02-15T04:46:31.349Z",
+					"updatedAt": "2022-02-15T04:52:46.615Z"
+				}
+			},
+			"message": "Exam-Lab association created"
+		}
+		```
++ Response 404 (application/json)
+
+### Dissociate [DELETE]
++ Response 200 (application/json)
+	+ Headers
+		```
+		X-Powered-By: Express
+		Content-Type: application/json; charset=utf-8
+		Content-Length: 85
+		ETag: W/"55-F3BkHur6DBVzAwXg4otLxVdzchI"
+		Date: Tue, 15 Feb 2022 04:58:35 GMT
+		Connection: keep-alive
+		Keep-Alive: timeout=5
+		```
+	+ Body
+		```json
+		{
+			"success": {},
+			"method": "DELETE",
+			"data": null,
+			"message": "Exam-Lab association deleted"
+		}
+		```
++ Response 404 (application/json)
+
