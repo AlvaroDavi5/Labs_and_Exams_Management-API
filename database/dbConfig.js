@@ -19,7 +19,7 @@ module.exports = {
 	/*
 	dialectOptions: {
 		ssl: {
-			rejectUnauthorized: false // to use SSL protocol
+			rejectUnauthorized: false // to use SSL protocol (in production)
 		}
 	}
 	*/
