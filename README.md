@@ -60,7 +60,7 @@ ___
 - [x] Exams Controllers
 - [x] Labs Controllers
 - [x] ExamLab Controllers
-- [ ] API
+- [x] API
   - [x] Routes
     - [x] Get active entities
     - [x] Find by term in name
