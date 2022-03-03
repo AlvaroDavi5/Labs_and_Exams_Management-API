@@ -1,5 +1,4 @@
-const connection = require("../database/connection.js")
-const Labs = require("../database/models/labs.js")
+import Labs from "../database/models/labs"
 
 
 /*
@@ -9,9 +8,7 @@ const Labs = require("../database/models/labs.js")
   ? Update
   ? Delete
 */
-async function createLab(name, address, status, return_id) {
-	Labs.init(connection)
-
+async function createLab(name: string, address: string, status: boolean, return_id: boolean): Promise<number | boolean> {
 	try {
 		const lab = await Labs.create(
 			{
@@ -34,9 +31,7 @@ async function createLab(name, address, status, return_id) {
 	}
 }
 
-async function getLabById(id) {
-	Labs.init(connection)
-
+async function getLabById(id: number): Promise<Labs | null> {
 	try {
 		const lab = await Labs.findByPk(id)
 
@@ -48,30 +43,19 @@ async function getLabById(id) {
 	}
 }
 
-async function getAllLabs() {
-	Labs.init(connection)
-
+async function getAllLabs(): Promise<Labs[]> {
 	try {
 		const labs = await Labs.findAll()
-		labList = []
 
-		if (Object.prototype.toString.call(labs) === '[object Array]') {
-			return labs
-		}
-		else {
-			labList.push(labs)
-			return labList
-		}
+		return labs
 	}
 	catch ({ message }) {
 		console.log(message)
-		return null
+		return []
 	}
 }
 
-async function searchLab(name) {
-	Labs.init(connection)
-
+async function searchLab(name: string): Promise<boolean> {
 	try {
 		const lab = await Labs.findOne({
 			where: {
@@ -87,9 +71,7 @@ async function searchLab(name) {
 	}
 }
 
-async function updateLab(lab, name, address, status) {
-	Labs.init(connection)
-
+async function updateLab(lab: Labs, name: string, address: string, status: boolean): Promise<boolean> {
 	try {
 		if (name) { lab.name = name }
 		if (address) { lab.address = address }
@@ -105,9 +87,7 @@ async function updateLab(lab, name, address, status) {
 	}
 }
 
-async function deleteLab(lab) {
-	Labs.init(connection)
-
+async function deleteLab(lab: Labs): Promise<boolean> {
 	try {
 		await lab.destroy()
 
@@ -120,4 +100,4 @@ async function deleteLab(lab) {
 }
 
 
-module.exports = { createLab, getLabById, getAllLabs, searchLab, updateLab, deleteLab }
+export { createLab, getLabById, getAllLabs, searchLab, updateLab, deleteLab }

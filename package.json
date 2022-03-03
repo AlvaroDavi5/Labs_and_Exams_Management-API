@@ -5,11 +5,11 @@
 	"author": "Alvaro Davi",
 	"license": "MIT",
 	"scripts": {
+		"dev": "ts-node-dev --ignore-watch node_modules src/app.ts",
 		"start": "node src/app.js",
 		"db:setup": "yarn sequelize-cli db:drop && yarn sequelize-cli db:create && yarn sequelize-cli db:migrate && yarn sequelize-cli db:seed:all"
 	},
 	"dependencies": {
-		"body-parser": "^1.19.1",
 		"dotenv": "^14.2.0",
 		"express": "^4.17.2",
 		"path": "^0.12.7",
@@ -17,6 +17,10 @@
 		"sequelize": "^6.13.0"
 	},
 	"devDependencies": {
-		"sequelize-cli": "^6.4.1"
+		"@types/express": "^4.17.13",
+		"@types/sequelize": "^4.28.11",
+		"sequelize-cli": "^6.4.1",
+		"ts-node-dev": "^1.1.8",
+		"typescript": "^4.5.5"
 	}
 }

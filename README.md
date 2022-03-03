@@ -26,7 +26,7 @@ To start the application, run the following command:
 # after install Sequelize
 yarn run db_config
 # after install Node.js
-node src/app.js
+yarn run dev
 ```
 After this, access the [localhost](http://localhost:3000/) link.
 ___
@@ -71,7 +71,7 @@ ___
   - [x] Documentation
   - [x] Containerization
 - [x] Aplication Deployment
-- [ ] Migrate Code to TypeScript in different releases
+- [x] Migrate Code to TypeScript in different releases
 
 ___
 </br>
