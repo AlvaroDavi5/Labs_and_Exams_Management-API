@@ -10,6 +10,6 @@ USER root
 COPY package*.json *.lock ./
 RUN yarn install
 COPY ./ ./
-CMD [ "node", "src/app.js" ]
+CMD [ "yarn", "run", "dev" ]
 
 EXPOSE 3000

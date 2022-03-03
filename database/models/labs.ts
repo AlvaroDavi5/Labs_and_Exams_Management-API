@@ -1,20 +1,29 @@
-import { Model, DataTypes } from 'sequelize'
-import connection from "../connection"
+import { Model, DataTypes, Association, HasManyGetAssociationsMixin, HasManyHasAssociationMixin } from 'sequelize'
+import Exams from "./exams"
 import ExamLab from "./exam_lab"
+import connection from "../connection"
 
 
 class Labs extends Model {
 
 	// * ------ Attributes ------
+	public id!: number
+	public name!: string
+	public address!: string // the null assertion `!` is required in strict mode
+	public status!: boolean
+	public readonly created_at!: Date
+	public readonly updated_at!: Date
 
-	declare id: number
-	declare name: string
-	declare address: string
-	declare status: boolean
+	// ? ------ Methods ------
+	public getExams!: HasManyGetAssociationsMixin<Exams>
+	public hasExam!: HasManyHasAssociationMixin<Exams, number>
+	//// ------ Association Method ------
+	public static associations: {
+		lab: Association<Labs, ExamLab>
+	}
 }
 
-// ! ------ Constructor Method ------
-
+// ! ------ Class Constructor Method ------
 Labs.init(
 	{
 		id: {
@@ -24,26 +33,24 @@ Labs.init(
 			unique: true,
 			primaryKey: true
 		},
-		name: DataTypes.STRING(150),
-		address: DataTypes.STRING(255),
-		status: DataTypes.BOOLEAN
+		name: {
+			type: DataTypes.STRING(150),
+			allowNull: false
+		},
+		address: {
+			type: DataTypes.STRING(255),
+			allowNull: false
+		},
+		status: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: true
+		}
 	},
 	{
 		sequelize: connection,
 		tableName: 'labs',
 		modelName: 'Labs'
-	}
-)
-
-// ? ------ Association Methods ------
-
-Labs.belongsTo(ExamLab,
-	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'lab_id',
-		targetKey: 'id',
-		as: 'lab'
 	}
 )
 

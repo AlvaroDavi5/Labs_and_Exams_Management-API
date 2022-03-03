@@ -52,7 +52,7 @@ export async function labRead(request: Request, response: Response) {
 		let examList: Array<Exams> = []
 
 		examLabs.forEach(examLab => {
-			if (examLab.lab_id == lab.id) {
+			if (examLab.lab_id == lab!.id) {
 				exams.forEach(exam => {
 					if (exam.id == examLab.exam_id) {
 						examList.push(exam)

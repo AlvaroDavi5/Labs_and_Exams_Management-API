@@ -1,20 +1,27 @@
-import { Model, DataTypes } from 'sequelize'
-import connection from "../connection"
+import { Model, DataTypes, Association } from 'sequelize'
 import Labs from "./labs"
 import Exams from "./exams"
+import connection from "../connection"
 
 
 class ExamLab extends Model {
 
 	// * ------ Attributes ------
+	public id!: number
+	public exam_id!: number
+	public lab_id!: number
+	public readonly created_at!: Date
+	public readonly updated_at!: Date
 
-	declare id: number
-	declare exam_id: number
-	declare lab_id: number
+	// ? ------ Methods ------
+	//// ------ Association Method ------
+	public static associations: {
+		labs: Association<ExamLab, Labs>
+		exams: Association<ExamLab, Exams>
+	}
 }
 
-// ! ------ Constructor Method ------
-
+// ! ------ Class Constructor Method ------
 ExamLab.init(
 	{
 		id: {
@@ -24,34 +31,19 @@ ExamLab.init(
 			unique: true,
 			primaryKey: true
 		},
-		exam_id: DataTypes.INTEGER,
-		lab_id: DataTypes.INTEGER
+		exam_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false
+		},
+		lab_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false
+		}
 	},
 	{
 		sequelize: connection,
 		tableName: 'exam_lab',
 		modelName: 'ExamLab'
-	}
-)
-
-// ? ------ Association Methods ------
-
-ExamLab.hasMany(Exams,
-	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'exam_id',
-		sourceKey: 'id',
-		as: 'exams'
-	}
-)
-ExamLab.hasMany(Labs,
-	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'lab_id',
-		sourceKey: 'id',
-		as: 'labs'
 	}
 )
 

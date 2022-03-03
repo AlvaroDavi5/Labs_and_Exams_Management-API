@@ -1,4 +1,4 @@
-import { Options, Dialect } from 'sequelize/types'
+import { Options, BuildOptions, Dialect } from 'sequelize/types'
 
 
 export interface DatabaseConfig {
@@ -19,5 +19,6 @@ export interface DatabaseConfig {
 		timestamps: boolean,
 		freezeTableName: boolean
 	},
-	options?: Options | undefined
+	options?: Options | undefined,
+	buildOptions?: BuildOptions | undefined
 }
