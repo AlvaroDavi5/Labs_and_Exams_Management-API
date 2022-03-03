@@ -1,3 +1,3 @@
 
-web: node src/app.js
-
+web-prod: node src/app.js
+web-dev: yarn run dev

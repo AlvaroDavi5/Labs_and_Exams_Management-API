@@ -1,18 +1,18 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const path = require('path')
-const dotenv = require('dotenv')
+import express from 'express'
+import bodyParser from 'body-parser'
+import path from 'path'
+import dotenv from 'dotenv'
 dotenv.config({path:__dirname+"/../.env.development.local"}) // remove this line or change to .env.production when in production
-const routes = require("./routes.js")
+import routes from "./routes"
 
 
-console.log(`Started application on port ${process.env.APP_PORT}!`)
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 if (routes(app)) {
-	console.log("routes loaded")
+	console.log("loaded routes")
 }
 
 app.listen(process.env.APP_PORT) // change APP_PORT to PORT in production
+console.log(`Started application on port ${process.env.APP_PORT}!`)

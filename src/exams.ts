@@ -1,13 +1,15 @@
-const examController = require("../controllers/examController.js")
-const labController = require("../controllers/labController.js")
-const examLabController = require("../controllers/examLabController.js")
+import { Request, Response } from 'express'
+import Labs from "@root/database/models/labs"
+import { createExam, getExamById, getAllExams, updateExam, deleteExam } from "../controllers/examController"
+import { getAllLabs } from "../controllers/labController"
+import { getAllExamLabs } from "../controllers/examLabController"
 
 
-exports.examCreate = async function(request, response) {
+export async function examCreate(request: Request, response: Response) {
 	const { method, body } = request
 
 	try {
-		const exams = await examController.getAllExams()
+		const exams = await getAllExams()
 		let examAlreadyExists = false
 		exams.forEach(exam => {
 			if (exam.name === body.name) {
@@ -16,7 +18,7 @@ exports.examCreate = async function(request, response) {
 		})
 		let exam_id = null
 		if (!examAlreadyExists) {
-			exam_id = await examController.createExam(body.name, body.type, true, true)
+			exam_id = await createExam(body.name, body.type, true, true)
 		}
 
 		response.status(201) // Created
@@ -40,19 +42,19 @@ exports.examCreate = async function(request, response) {
 	}
 }
 
-exports.examRead = async function(request, response) {
+export async function examRead(request: Request, response: Response) {
 	const { method, params } = request
 
 	try {
-		const exam = await examController.getExamById(parseInt(params.id))
-		const labs = await labController.getAllLabs()
-		const examLabs = await examLabController.getAllExamLabs()
-		let labList = []
+		const exam = await getExamById(parseInt(params.id))
+		const labs = await getAllLabs()
+		const examLabs = await getAllExamLabs()
+		let labList: Array<Labs> = []
 
 		examLabs.forEach(examLab => {
-			if (parseInt(examLab.exam_id) == parseInt(exam.id)) {
+			if (examLab.exam_id == exam!.id) {
 				labs.forEach(lab => {
-					if (parseInt(lab.id) == parseInt(examLab.lab_id)) {
+					if (lab.id == examLab.lab_id) {
 						labList.push(lab)
 					}
 				})
@@ -81,25 +83,24 @@ exports.examRead = async function(request, response) {
 	}
 }
 
-exports.examReadAll = async function(request, response) {
+export async function examReadAll(request: Request, response: Response) {
 	const { method, query } = request
 
 	try {
-		const allExams = await examController.getAllExams()
+		const allExams = await getAllExams()
 		let exams = allExams.filter(exam => {
 			return exam.status == true
 		})
+		const activeStatus: boolean = String(query.active_status).toLowerCase() == "true" ? true : false
+
 		if (!!query.search_term) {
 			exams = exams.filter(exam => {
-				return exam.name.toLowerCase().includes(query.search_term.toLowerCase())
+				return (exam.name.toLowerCase()).includes(new String(query.search_term).toLowerCase())
 			})
 		}
-		if (!!query.active_status) {
+		if (activeStatus) {
 			exams = exams.filter(exam => {
-				return (
-					exam.status == query.active_status ||
-					String(exam.status).toLowerCase() == String(query.active_status).toLowerCase()
-				)
+				return exam.status == activeStatus
 			})
 		}
 
@@ -124,14 +125,14 @@ exports.examReadAll = async function(request, response) {
 	}
 }
 
-exports.examUpdate = async function(request, response) {
+export async function examUpdate(request: Request, response: Response) {
 	const { method, params, body } = request
 
 	try {
-		const exam = await examController.getExamById(parseInt(params.id))
+		const exam = await getExamById(parseInt(params.id))
 		let wasUpdated = false
 		if (!!exam) {
-			wasUpdated = await examController.updateExam(exam, body.name, body.type, body.status)
+			wasUpdated = await updateExam(exam, body.name, body.type, body.status)
 		}
 
 		response.status(200) // OK
@@ -155,14 +156,14 @@ exports.examUpdate = async function(request, response) {
 	}
 }
 
-exports.examDelete = async function(request, response) {
+export async function examDelete(request: Request, response: Response) {
 	const { method, params } = request
 
 	try {
-		const exam = await examController.getExamById(parseInt(params.id))
+		const exam = await getExamById(parseInt(params.id))
 		let wasDeleted = false
 		if (!!exam) {
-			wasDeleted = await examController.deleteExam(exam)
+			wasDeleted = await deleteExam(exam)
 		}
 
 		response.status(200) // OK

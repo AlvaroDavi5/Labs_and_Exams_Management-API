@@ -6,7 +6,7 @@ services:
   app:
     build: ./
     container_name: WaProj_API
-    command: node src/app.js
+    command: yarn run dev
     user: root
     networks:
       - default

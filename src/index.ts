@@ -1,5 +1,7 @@
+import { Request, Response } from "express"
 
-exports.info = function(request, response) {
+
+export function info(request: Request, response: Response) {
 	const { url, path, protocol, method, query, params, body } = request
 
 	try {

@@ -1,10 +1,7 @@
-const connection = require("../database/connection.js")
-const ExamLab = require("../database/models/exam_lab.js")
+import ExamLab from "../database/models/exam_lab"
 
 
-async function createExamLab(exam_id, lab_id, return_id) {
-	ExamLab.init(connection)
-
+async function createExamLab(exam_id: number, lab_id: number, return_id: boolean): Promise<number | boolean> {
 	try {
 		const examLab = await ExamLab.create(
 			{
@@ -26,9 +23,7 @@ async function createExamLab(exam_id, lab_id, return_id) {
 	}
 }
 
-async function getExamLabById(id) {
-	ExamLab.init(connection)
-
+async function getExamLabById(id: number): Promise<ExamLab | null> {
 	try {
 		const examLab = await ExamLab.findByPk(id)
 
@@ -40,30 +35,19 @@ async function getExamLabById(id) {
 	}
 }
 
-async function getAllExamLabs() {
-	ExamLab.init(connection)
-
+async function getAllExamLabs(): Promise<ExamLab[]> {
 	try {
 		const examLabs = await ExamLab.findAll()
-		let examLabList = []
 
-		if (Object.prototype.toString.call(examLabs) === '[object Array]') {
-			return examLabs
-		}
-		else {
-			examLabList.push(examLabs)
-			return examLabList
-		}
+		return examLabs
 	}
 	catch ({ message }) {
 		console.log(message)
-		return null
+		return []
 	}
 }
 
-async function updateExamLab(exam_lab, exam_id, lab_id) {
-	ExamLab.init(connection)
-
+async function updateExamLab(exam_lab: ExamLab, exam_id: number, lab_id: number): Promise<boolean> {
 	try {
 		if (exam_id) { exam_lab.exam_id = exam_id }
 		if (lab_id) { exam_lab.lab_id = lab_id }
@@ -78,9 +62,7 @@ async function updateExamLab(exam_lab, exam_id, lab_id) {
 	}
 }
 
-async function deleteExamLab(exam_lab) {
-	ExamLab.init(connection)
-
+async function deleteExamLab(exam_lab: ExamLab): Promise<boolean> {
 	try {
 		await exam_lab.destroy()
 
@@ -93,4 +75,4 @@ async function deleteExamLab(exam_lab) {
 }
 
 
-module.exports = { createExamLab, getExamLabById, getAllExamLabs, updateExamLab, deleteExamLab }
+export { createExamLab, getExamLabById, getAllExamLabs, updateExamLab, deleteExamLab }

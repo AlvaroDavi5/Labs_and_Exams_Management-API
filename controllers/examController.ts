@@ -1,10 +1,7 @@
-const connection = require("../database/connection.js")
-const Exams = require("../database/models/exams.js")
+import Exams from "../database/models/exams"
 
 
-async function createExam(name, type, status, return_id) {
-	Exams.init(connection)
-
+async function createExam(name: string, type: string, status: boolean, return_id: boolean): Promise<number | boolean> {
 	try {
 		const exam = await Exams.create(
 			{
@@ -27,9 +24,7 @@ async function createExam(name, type, status, return_id) {
 	}
 }
 
-async function getExamById(id) {
-	Exams.init(connection)
-
+async function getExamById(id: number): Promise<Exams | null> {
 	try {
 		const exam = await Exams.findByPk(id)
 
@@ -41,30 +36,19 @@ async function getExamById(id) {
 	}
 }
 
-async function getAllExams() {
-	Exams.init(connection)
-
+async function getAllExams(): Promise<Exams[]> {
 	try {
 		const exams = await Exams.findAll()
-		let examList = []
 
-		if (Object.prototype.toString.call(exams) === '[object Array]') {
-			return exams
-		}
-		else {
-			examList.push(exams)
-			return examList
-		}
+		return exams
 	}
 	catch ({ message }) {
 		console.log(message)
-		return null
+		return []
 	}
 }
 
-async function searchExam(name) {
-	Exams.init(connection)
-
+async function searchExam(name: string): Promise<boolean> {
 	try {
 		const exam = await Exams.findOne({
 			where: {
@@ -80,9 +64,7 @@ async function searchExam(name) {
 	}
 }
 
-async function updateExam(exam, name, type, status) {
-	Exams.init(connection)
-
+async function updateExam(exam: Exams, name: string, type: string, status: boolean): Promise<boolean> {
 	try {
 		if (name) { exam.name = name }
 		if (type) { exam.type = type }
@@ -98,9 +80,7 @@ async function updateExam(exam, name, type, status) {
 	}
 }
 
-async function deleteExam(exam) {
-	Exams.init(connection)
-
+async function deleteExam(exam: Exams): Promise<boolean> {
 	try {
 		await exam.destroy()
 
@@ -113,4 +93,4 @@ async function deleteExam(exam) {
 }
 
 
-module.exports = { createExam, getExamById, getAllExams, searchExam, updateExam, deleteExam }
+export { createExam, getExamById, getAllExams, searchExam, updateExam, deleteExam }
