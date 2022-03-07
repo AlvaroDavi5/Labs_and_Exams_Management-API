@@ -47,7 +47,12 @@ async function getAllLabs(): Promise<Labs[]> {
 	try {
 		const labs = await Labs.findAll()
 
-		return labs
+		if (!(Array.isArray(labs))) {
+			return [ labs ]
+		}
+		else {
+			return labs
+		}
 	}
 	catch ({ message }) {
 		console.log(message)
