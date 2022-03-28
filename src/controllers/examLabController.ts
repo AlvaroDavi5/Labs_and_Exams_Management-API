@@ -1,4 +1,4 @@
-import ExamLab from "../database/models/exam_lab"
+import ExamLab from "../../database/models/exam_lab"
 
 
 async function createExamLab(exam_id: number, lab_id: number, return_id: boolean): Promise<number | boolean> {

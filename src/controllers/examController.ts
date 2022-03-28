@@ -1,4 +1,4 @@
-import Exams from "../database/models/exams"
+import Exams from "../../database/models/exams"
 
 
 async function createExam(name: string, type: string, status: boolean, return_id: boolean): Promise<number | boolean> {

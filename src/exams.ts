@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import Labs from "@root/database/models/labs"
-import { createExam, getExamById, getAllExams, updateExam, deleteExam } from "../controllers/examController"
-import { getAllLabs } from "../controllers/labController"
-import { getAllExamLabs } from "../controllers/examLabController"
+import { createExam, getExamById, getAllExams, updateExam, deleteExam } from "./controllers/examController"
+import { getAllLabs } from "./controllers/labController"
+import { getAllExamLabs } from "./controllers/examLabController"
+import { httpConstants } from "../configs/httpConstants"
 
 
 export async function examCreate(request: Request, response: Response) {
@@ -12,27 +13,29 @@ export async function examCreate(request: Request, response: Response) {
 		const exams = await getAllExams()
 		let examAlreadyExists = false
 		exams.forEach(exam => {
-			if (exam.name === body.name) {
+			if (exam.name === body?.name) {
 				examAlreadyExists = true
 			}
 		})
 		let exam_id = null
 		if (!examAlreadyExists) {
-			exam_id = await createExam(body.name, body.type, true, true)
+			exam_id = await createExam(body?.name, body?.type, true, true)
 		}
 
-		response.status(201) // Created
+		response.status(httpConstants.status.CREATED)
 		response.send({
 			success: !!exam_id,
 			method: method,
 			data: {
 				exam_id: exam_id
 			},
-			message: !!exam_id ? "Exam created successfully" : "Error to create exam"
+			message: !!exam_id
+				? httpConstants.messages.created("Exam")
+				: httpConstants.messages.notCreated("Exam")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.UNAUTHORIZED)
 		response.send({
 			success: false,
 			method: method,
@@ -46,7 +49,7 @@ export async function examRead(request: Request, response: Response) {
 	const { method, params } = request
 
 	try {
-		const exam = await getExamById(parseInt(params.id))
+		const exam = await getExamById(parseInt(params?.id))
 		const labs = await getAllLabs()
 		const examLabs = await getAllExamLabs()
 		let labList: Array<Labs> = []
@@ -61,7 +64,7 @@ export async function examRead(request: Request, response: Response) {
 			}
 		})
 
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: !!exam,
 			method: method,
@@ -69,11 +72,13 @@ export async function examRead(request: Request, response: Response) {
 				exam: exam,
 				associated_labs: labList
 			},
-			message: !!exam ? "Exam finded successfully" : "Exam not found"
+			message: !!exam
+				? httpConstants.messages.found("Exam")
+				: httpConstants.messages.notFound("Exam")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.NOT_FOUND)
 		response.send({
 			success: false,
 			method: method,
@@ -91,11 +96,11 @@ export async function examReadAll(request: Request, response: Response) {
 		let exams = allExams.filter(exam => {
 			return exam.status == true
 		})
-		const activeStatus: boolean = String(query.active_status).toLowerCase() == "true" ? true : false
+		const activeStatus: boolean = String(query?.active_status).toLowerCase() == "true" ? true : false
 
-		if (!!query.search_term) {
+		if (!!query?.search_term) {
 			exams = exams.filter(exam => {
-				return (exam.name.toLowerCase()).includes(new String(query.search_term).toLowerCase())
+				return (exam.name.toLowerCase()).includes(new String(query?.search_term).toLowerCase())
 			})
 		}
 		if (activeStatus) {
@@ -104,18 +109,20 @@ export async function examReadAll(request: Request, response: Response) {
 			})
 		}
 
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: !!exams,
 			method: method,
 			data: {
 				exams: exams
 			},
-			message: !!exams ? "Exams finded successfully" : "Exams not found"
+			message: !!exams
+				? httpConstants.messages.found("Exams")
+				: httpConstants.messages.notFound("Exams")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.NOT_FOUND)
 		response.send({
 			success: false,
 			method: method,
@@ -129,24 +136,26 @@ export async function examUpdate(request: Request, response: Response) {
 	const { method, params, body } = request
 
 	try {
-		const exam = await getExamById(parseInt(params.id))
+		const exam = await getExamById(parseInt(params?.id))
 		let wasUpdated = false
 		if (!!exam) {
-			wasUpdated = await updateExam(exam, body.name, body.type, body.status)
+			wasUpdated = await updateExam(exam, body?.name, body?.type, body?.status)
 		}
 
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: !!wasUpdated,
 			method: method,
 			data: {
 				updated_exam: exam
 			},
-			message: !!wasUpdated ? "Exam updated successfully" : "Error to update exam"
+			message: !!wasUpdated
+				? httpConstants.messages.updated("Exam")
+				: httpConstants.messages.notUpdated("Exam")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.UNAUTHORIZED)
 		response.send({
 			success: false,
 			method: method,
@@ -160,24 +169,26 @@ export async function examDelete(request: Request, response: Response) {
 	const { method, params } = request
 
 	try {
-		const exam = await getExamById(parseInt(params.id))
+		const exam = await getExamById(parseInt(params?.id))
 		let wasDeleted = false
 		if (!!exam) {
 			wasDeleted = await deleteExam(exam)
 		}
 
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: !!wasDeleted,
 			method: method,
 			data: {
 				deleted_exam: exam
 			},
-			message: !!wasDeleted ? "Exam deleted successfully" : "Error to delete exam"
+			message: !!wasDeleted
+				? httpConstants.messages.deleted("Exam")
+				: httpConstants.messages.notDeleted("Exam")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.UNAUTHORIZED)
 		response.send({
 			success: false,
 			method: method,

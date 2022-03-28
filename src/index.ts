@@ -1,11 +1,12 @@
 import { Request, Response } from "express"
+import { httpConstants } from "../configs/httpConstants"
 
 
 export function info(request: Request, response: Response) {
 	const { url, path, protocol, method, query, params, body } = request
 
 	try {
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: true,
 			message: "Connected to API successfully",
@@ -22,7 +23,7 @@ export function info(request: Request, response: Response) {
 		})
 	}
 	catch ({ message }) {
-		response.status(500) // Internal Server Error
+		response.status(httpConstants.status.INTERNAL_SERVER_ERROR)
 		response.send({
 			success: false,
 			message: message

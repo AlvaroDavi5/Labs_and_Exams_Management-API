@@ -1,4 +1,4 @@
-import Labs from "../database/models/labs"
+import Labs from "../../database/models/labs"
 
 
 /*

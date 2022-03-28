@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
-import { getExamById } from "../controllers/examController"
-import { getLabById } from "../controllers/labController"
-import { createExamLab, getAllExamLabs, deleteExamLab } from "../controllers/examLabController"
+import { getExamById } from "./controllers/examController"
+import { getLabById } from "./controllers/labController"
+import { createExamLab, getAllExamLabs, deleteExamLab } from "./controllers/examLabController"
+import { httpConstants } from "../configs/httpConstants"
 
 
 export async function associate(request: Request, response: Response) {
@@ -12,7 +13,7 @@ export async function associate(request: Request, response: Response) {
 		let associationAlreadyExists = false
 
 		allExamLabs.forEach(examLab => {
-			if (examLab.exam_id == parseInt(params.exam_id) && examLab.lab_id == parseInt(params.lab_id)) {
+			if (examLab.exam_id == parseInt(params?.exam_id) && examLab.lab_id == parseInt(params?.lab_id)) {
 				associationAlreadyExists = true
 			}
 		})
@@ -20,15 +21,15 @@ export async function associate(request: Request, response: Response) {
 		let exam = null
 		let lab = null
 		if (!associationAlreadyExists) {
-			exam = await getExamById(parseInt(params.exam_id))
-			lab = await getLabById(parseInt(params.lab_id))
+			exam = await getExamById(parseInt(params?.exam_id))
+			lab = await getLabById(parseInt(params?.lab_id))
 
 			if (!!exam && !!lab) {
-				newExamLab = await createExamLab(parseInt(params.exam_id), parseInt(params.lab_id), false)
+				newExamLab = await createExamLab(parseInt(params?.exam_id), parseInt(params?.lab_id), false)
 			}
 		}
 
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: !!newExamLab,
 			method: method,
@@ -36,11 +37,13 @@ export async function associate(request: Request, response: Response) {
 				exam: exam,
 				lab: lab
 			},
-			message: !!newExamLab ? "Exam-Lab association created" : "Error to create Exam-Lab association"
+			message: !!newExamLab
+				? httpConstants.messages.created("Exam-Lab association")
+				: httpConstants.messages.notCreated("Exam-Lab association")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.UNAUTHORIZED)
 		response.send({
 			success: false,
 			method: method,
@@ -58,21 +61,23 @@ export async function dissociate(request: Request, response: Response) {
 		let deletedAssociation = null
 
 		allExamLabs.forEach(examLab => {
-			if (examLab.exam_id == parseInt(params.exam_id) && examLab.lab_id == parseInt(params.lab_id)) {
+			if (examLab.exam_id == parseInt(params?.exam_id) && examLab.lab_id == parseInt(params?.lab_id)) {
 				deletedAssociation = deleteExamLab(examLab)
 			}
 		})
 
-		response.status(200) // OK
+		response.status(httpConstants.status.OK)
 		response.send({
 			success: !!deletedAssociation,
 			method: method,
 			data: null,
-			message: !!deletedAssociation ? "Exam-Lab association deleted" : "Error to delete Exam-Lab association"
+			message: !!deletedAssociation
+				? httpConstants.messages.deleted("Exam-Lab association")
+				: httpConstants.messages.notDeleted("Exam-Lab association")
 		})
 	}
 	catch ({ message }) {
-		response.status(401) // Unauthorized
+		response.status(httpConstants.status.UNAUTHORIZED)
 		response.send({
 			success: false,
 			method: method,
