@@ -5,15 +5,15 @@ export interface DatabaseConfig {
 	database: string | undefined,
 	username: string | undefined,
 	password: string | undefined,
-	host: string | undefined,
-	charset?: string | undefined,
 	dialect: Dialect | undefined,
+	host: string | undefined,
+	port: number | undefined,
+	charset?: string | undefined,
 	dialectOptions?: {
 		ssl: {
 			rejectUnauthorized: boolean
 		}
 	},
-	port: number | undefined,
 	define?: {
 		underscored: boolean,
 		timestamps: boolean,
