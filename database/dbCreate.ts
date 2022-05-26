@@ -18,45 +18,18 @@ const models = {
   * @hasMany - One-to-Many, target -> source
   * @belongsToMany - Many-to-Many, source -> target
 **/
-ExamLab.hasMany(models.Exams,
+Labs.belongsToMany(models.Exams,
 	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'exam_id',
-		sourceKey: 'id',
+		through: models.ExamLab,
 		as: 'exams'
 	}
 )
-ExamLab.hasMany(models.Labs,
+Exams.belongsToMany(models.Labs,
 	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'lab_id',
-		sourceKey: 'id',
+		through: models.ExamLab,
 		as: 'labs'
 	}
 )
-
-Labs.belongsTo(models.ExamLab,
-	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'lab_id',
-		targetKey: 'id',
-		as: 'lab'
-	}
-)
-
-Exams.belongsTo(models.ExamLab,
-	{
-		constraints: true,
-		foreignKeyConstraint: true,
-		foreignKey: 'exam_id',
-		targetKey: 'id',
-		as: 'exam'
-	}
-)
-
 
 // * drop all tables and recreate them
 connection.sync({ force: true }).then(

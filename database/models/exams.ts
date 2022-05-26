@@ -19,7 +19,7 @@ class Exams extends Model {
 	public hasLab!: HasManyHasAssociationMixin<Labs, number>
 	//// ------ Association Method ------
 	public static associations: {
-		exam: Association<Exams, ExamLab>
+		exams: Association<Exams, ExamLab>
 	}
 }
 
